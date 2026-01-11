@@ -28,6 +28,7 @@ public class VanillaTooltips {
 
     public static HashMap<Identifier, ChemistryCompound> vanillaItems = new HashMap<>() {{ // The Monolith. Converts many item Identifiers to rough chemical formulas
         put(getId(Items.COAL), ChemistryCompound.fromFormula(El(C, 1))); // C
+        put(getId(Items.CHARCOAL), ChemistryCompound.fromFormula(El(C, 1))); // C
         put(getId(Items.DIAMOND), ChemistryCompound.elemental(C, 1)); // C
         put(getId(Items.IRON_INGOT), ChemistryCompound.fromFormula(El(Fe, 1))); // Fe
         put(getId(Items.GOLD_INGOT), ChemistryCompound.fromFormula(El(Au, 1))); // Au
@@ -40,6 +41,8 @@ public class VanillaTooltips {
         put(getId(Items.GLASS), ChemistryCompound.fromFormula(El(Si, 1), El(O, 2))); // cr.: https://en.wikipedia.org/wiki/Glass#Microscopic_structure
         put(getId(Items.GUNPOWDER), ChemistryCompound.fromFormula(El(K, 1), El(N, 1), El(O, 3), El(C, 1), El(S, 1))); // cr.: https://en.wikipedia.org/wiki/Gunpowder#Components
         put(getId(Items.SNOWBALL), ChemistryCompound.fromFormula(El(H, 2), El(O,1))); // H2O
+        put(getId(Items.ICE), ChemistryCompound.fromFormula(El(H, 2), El(O,1))); // H2O
+        put(getId(Items.OBSIDIAN), ChemistryCompound.fromFormula(El(Si, 1), El(O,2))); // cr.: https://en.wikipedia.org/wiki/Obsidian
         put(getId(Items.BONE), ChemistryCompound.fromFormula(El(Ca, 10), El(P, 6), El(O, 26), El(H, 2))); // cr.: https://www.doitpoms.ac.uk/tlplib/bones/structure.php
         put(getId(Items.CLAY_BALL), ChemistryCompound.fromFormula(El(Al, 2), El(Si, 2), El(O, 9), El(H, 4))); // cr.: https://en.wikipedia.org/wiki/Kaolinite
         put(getId(Items.OAK_LOG), ChemistryCompound.fromFormula(El(C, 31), El(H, 34), El(O, 11))); // cr.: https://en.wikipedia.org/wiki/Lignin#Composition_and_structure
@@ -50,7 +53,7 @@ public class VanillaTooltips {
         put(getId(Items.DARK_OAK_LOG), ChemistryCompound.fromFormula(El(C, 31), El(H, 34), El(O, 11)));
         put(getId(Items.MANGROVE_LOG), ChemistryCompound.fromFormula(El(C, 31), El(H, 34), El(O, 11)));
         put(getId(Items.PALE_OAK_LOG), ChemistryCompound.fromFormula(El(C, 31), El(H, 34), El(O, 11)));
-        put(getId(Items.SPRUCE_LOG), ChemistryCompound.fromFormula(El(C, 31), El(H, 34), El(O, 11)));;
+        put(getId(Items.SPRUCE_LOG), ChemistryCompound.fromFormula(El(C, 31), El(H, 34), El(O, 11)));
         put(getId(Items.STRIPPED_OAK_LOG), ChemistryCompound.fromFormula(El(C, 31), El(H, 34), El(O, 11)));
         put(getId(Items.STRIPPED_ACACIA_LOG), ChemistryCompound.fromFormula(El(C, 31), El(H, 34), El(O, 11)));
         put(getId(Items.STRIPPED_BIRCH_LOG), ChemistryCompound.fromFormula(El(C, 31), El(H, 34), El(O, 11)));
@@ -59,7 +62,22 @@ public class VanillaTooltips {
         put(getId(Items.STRIPPED_DARK_OAK_LOG), ChemistryCompound.fromFormula(El(C, 31), El(H, 34), El(O, 11)));
         put(getId(Items.STRIPPED_MANGROVE_LOG), ChemistryCompound.fromFormula(El(C, 31), El(H, 34), El(O, 11)));
         put(getId(Items.STRIPPED_PALE_OAK_LOG), ChemistryCompound.fromFormula(El(C, 31), El(H, 34), El(O, 11)));
-        put(getId(Items.STRIPPED_SPRUCE_LOG), ChemistryCompound.fromFormula(El(C, 31), El(H, 34), El(O, 11)));;
+        put(getId(Items.STRIPPED_SPRUCE_LOG), ChemistryCompound.fromFormula(El(C, 31), El(H, 34), El(O, 11)));
+        put(getId(Items.COBWEB), ChemistryCompound.fromFormula(El(C,2), El(H,5), El(N, 1), El(O, 2))); // cr.: https://bioinfo.uochb.cas.cz/teaching/protphys2019/Saravanan.pdf, https://en.wikipedia.org/wiki/Glycine
+        put(getId(Items.STRING), ChemistryCompound.fromFormula(El(C,2), El(H,5), El(N, 1), El(O, 2)));
+        put(getId(Items.BASALT), ChemistryCompound.fromFormula(El(Al, 10), El(Ca, 4), El(Fe, 3), El(K, 1), El(Mg, 2), El(Na, 1), El(O, 60), El(Si, 18))); // cr.: https://docs.google.com/spreadsheets/d/1NmP3F-X8efEhpApaaksnH-E4VQ6ahO4wJuhygTIm3rs/edit?usp=sharing
+        put(getId(Items.ANDESITE), ChemistryCompound.fromFormula(El(Al, 11), El(Ca, 3), El(Fe, 2), El(K, 1), El(Mg, 1), El(Na, 2), El(O, 61), El(Si, 18)));
+        put(getId(Items.GRANITE), ChemistryCompound.fromFormula(El(Al, 9), El(Ca, 1), El(Fe, 2), El(K, 2), El(Na, 2), El(O, 62), El(Si, 22)));
+        put(getId(Items.STONE), ChemistryCompound.fromFormula(El(Al, 10), El(Ca, 2), El(Fe, 2), El(K, 1), El(Mg, 2), El(Na, 2), El(O, 61), El(Si, 19)));
+        put(getId(Items.COBBLESTONE), ChemistryCompound.fromFormula(El(Al, 10), El(Ca, 2), El(Fe, 2), El(K, 1), El(Mg, 2), El(Na, 2), El(O, 61), El(Si, 19)));
+        put(getId(Items.DEEPSLATE), ChemistryCompound.fromFormula(El(Al, 4), El(Ca, 2), El(Fe, 3), El(Mg, 14), El(O, 60), El(Si, 18)));
+        put(getId(Items.COBBLED_DEEPSLATE), ChemistryCompound.fromFormula(El(Al, 4), El(Ca, 2), El(Fe, 3), El(Mg, 14), El(O, 60), El(Si, 18)));
+        put(getId(Items.INK_SAC), ChemistryCompound.fromFormula(El(C, 23), El(H, 20), El(N, 4), El(O, 8), El(S, 2))); // cr.: https://en.wikipedia.org/wiki/Cephalopod_ink#Properties_and_chemistry, https://pubchem.ncbi.nlm.nih.gov/compound/Eumelanins#section=InChI
+        put(getId(Items.GREEN_DYE), ChemistryCompound.fromFormula(El(C,55), El(H, 70), El(O, 6), El(N, 4), El(Mg, 1))); // cr.: https://en.wikipedia.org/wiki/Cactus#Stems, https://en.wikipedia.org/wiki/Chlorophyll#Chemical_structure
+        put(getId(Items.BROWN_DYE), ChemistryCompound.fromFormula(El(C,8),El(H, 13), El(O, 5))); // cr.: https://www.chembk.com/en/chem/CACAO%20PIGMENT, https://www.frontiersin.org/journals/materials/articles/10.3389/fmats.2025.1537067/full
+        put(getId(Items.RED_DYE), ChemistryCompound.fromFormula(El(C,15),El(H,11),El(O, 5))); // cr.: https://en.wikipedia.org/wiki/Pelargonidin
+        put(getId(Items.YELLOW_DYE), ChemistryCompound.fromFormula(El(C, 40), El(H, 56), El(O, 3))); // cr.: https://en.wikipedia.org/wiki/Antheraxanthin
+        put(getId(Items.FLINT), ChemistryCompound.fromFormula(El(Si, 1), El(O, 2))); // cr.: https://digitalfire.com/material/flint
     }};
     public static final int ultimateMaxDepth = 1024; // Max depth before we give up on processing deeper into recipes. Used to prevent infinite loops
     public static HashMap<Identifier, ChemistryCompound> processedItems = new HashMap<>();
