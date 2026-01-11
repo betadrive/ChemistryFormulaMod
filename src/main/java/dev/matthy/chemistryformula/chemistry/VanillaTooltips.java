@@ -26,7 +26,7 @@ public class VanillaTooltips {
         return t -> seen.add(keyExtractor.apply(t));
     }
 
-    public static HashMap<Identifier, ChemistryCompound> vanillaItems = new HashMap<>() {{
+    public static HashMap<Identifier, ChemistryCompound> vanillaItems = new HashMap<>() {{ // The Monolith. Converts many item Identifiers to rough chemical formulas
         put(getId(Items.COAL), ChemistryCompound.fromFormula(El(C, 1))); // C
         put(getId(Items.DIAMOND), ChemistryCompound.elemental(C, 1)); // C
         put(getId(Items.IRON_INGOT), ChemistryCompound.fromFormula(El(Fe, 1))); // Fe
@@ -61,7 +61,7 @@ public class VanillaTooltips {
         put(getId(Items.STRIPPED_PALE_OAK_LOG), ChemistryCompound.fromFormula(El(C, 31), El(H, 34), El(O, 11)));
         put(getId(Items.STRIPPED_SPRUCE_LOG), ChemistryCompound.fromFormula(El(C, 31), El(H, 34), El(O, 11)));;
     }};
-    public static final int ultimateMaxDepth = 1024;
+    public static final int ultimateMaxDepth = 1024; // Max depth before we give up on processing deeper into recipes. Used to prevent infinite loops
     public static HashMap<Identifier, ChemistryCompound> processedItems = new HashMap<>();
     public static Identifier getId(Item item) {
         return Registries.ITEM.getId(item);
@@ -77,9 +77,9 @@ public class VanillaTooltips {
                 .filter((RecipeEntry<?> entry) -> entry.value() instanceof ShapedRecipe || entry.value() instanceof ShapelessRecipe) // Get only shaped recipes
                 .map(recipe -> (CraftingRecipe) recipe.value())
                 .forEach((CraftingRecipe recipe) -> {
-                    int validSlots = 0;
-                    ArrayList<ChemistryCompound> satisfactoryIngredients = new ArrayList<>();
-                    for (Ingredient ingredient : recipe.getIngredientPlacement().getIngredients()) {
+                    int validSlots = 0; // Slots that aren't empty
+                    ArrayList<ChemistryCompound> satisfactoryIngredients = new ArrayList<>(); // All ChemistryCompounds that could be calculated from their Ingredients
+                    for (Ingredient ingredient : recipe.getIngredientPlacement().getIngredients()) { // Brute-force to see if any keys in our vanillaItems match a requirement
                         if(ingredient.isEmpty()) continue;
                         else validSlots++;
                         for (Item item : acceptableItems) {
@@ -88,38 +88,36 @@ public class VanillaTooltips {
                             break;
                         }
                     }
-                    if(satisfactoryIngredients.size() != validSlots) return;
-                    ItemStack stack = recipe.craft(CraftingRecipeInput.EMPTY, server.getRegistryManager());
-                    Identifier id = getId(stack.getItem());
-                    if(stack.getItem().equals(Items.BLUE_WOOL)) System.out.println(satisfactoryIngredients);
-                    if(vanillaItems.containsKey(id)) return;
-                    ChemistryCompound compound = ChemistryCompound.fromFormula(El(ChemistryElement.H, 0));
-                    for(ChemistryCompound toAdd : satisfactoryIngredients.stream().filter(distinctByKey(ChemistryCompound::toString)).toList()) compound.add(toAdd);
-                    if(compound.isEmpty()) return;
-                    vanillaItems.put(id, compound);
+                    if(satisfactoryIngredients.size() != validSlots) return; // If there were any items *without* formulas, then give up
+                    ItemStack stack = recipe.craft(CraftingRecipeInput.EMPTY, server.getRegistryManager()); // Get the output item ItemStack
+                    Identifier id = getId(stack.getItem()); // Get the output item ID
+                    if(vanillaItems.containsKey(id)) return; // If already calculated, exit this item iteration early
+                    ChemistryCompound compound = ChemistryCompound.fromFormula(El(ChemistryElement.H, 0)); // Make empty ChemistryCompound
+                    for(ChemistryCompound toAdd : satisfactoryIngredients.stream().filter(distinctByKey(ChemistryCompound::toString)).toList()) compound.add(toAdd); // Combine all the unique ChemistryCompounds into 1 mixture
+                    if(compound.isEmpty()) return; // If the compound is empty, exit early
+                    vanillaItems.put(id, compound); // Add to our database otherwise
                 });
     }
     public static void deepInit(MinecraftServer server) {
         int recipesComputed = 0;
-        for(int i=0; i<ultimateMaxDepth; i++) {
+        for(int i=0; i<ultimateMaxDepth; i++) { // We run processTree multiple times in order to get recipes nested more than 2 layers deep. For example, without this loop, wood planks would work (oak logs are already categorized), but sticks would not (oak logs are categorized but oak planks are not yet)
             processTree(server);
-            ChemistryFormulaMod.LOGGER.info("depth=%d, %d items' compositions computed".formatted(i, vanillaItems.size()));
-            if(vanillaItems.size() > recipesComputed) recipesComputed = vanillaItems.size();
-            else {
-                ChemistryFormulaMod.LOGGER.info("No additional recipes computed, stopping composition computation");
-                break;
+            ChemistryFormulaMod.LOGGER.info("depth=%d, %d items' compositions computed".formatted(i, vanillaItems.size())); // Log how many recipes have been calculated
+            if(vanillaItems.size() > recipesComputed) recipesComputed = vanillaItems.size(); // If we've calculated more recipes total than last time, keep going
+            else { // Otherwise, give up as there probably is no more layers of recipes to do. This also saves computational time by cutting it off early and not going to ultimateMaxDepth every time, which is a last-resort
+                ChemistryFormulaMod.LOGGER.info("No additional recipes computed, stopping composition computation"); // Alert we've finished into log
+                break; // Don't go again
             }
         }
     }
     public static void initItems(HashMap<Identifier, ChemistryCompound> items) {
-        ItemTooltipCallback.EVENT.register((itemStack, tooltipContext, tooltipType, list) -> {
-            if(!items.containsKey(getId(itemStack.getItem()))) return;
-            list.add(Text.literal(items.get(getId(itemStack.getItem())).toString()));
+        ItemTooltipCallback.EVENT.register((itemStack, tooltipContext, tooltipType, list) -> { // Add our chemical formula for all of our items as a hook into every item
+            if(!items.containsKey(getId(itemStack.getItem()))) return; // If it isn't catalogued, don't add any tooltip
+            list.add(Text.literal(items.get(getId(itemStack.getItem())).toString())); // If it *is* catalogued, add the tooltip!
         });
     }
     public static void init() {
-        // System.out.println(Registries.RECIPE_SERIALIZER.getIds());
-        // ids: minecraft:crafting_shaped, minecraft:crafting_shapeless
+        // Currently supported recipe type ids: minecraft:crafting_shaped, minecraft:crafting_shapeless
         initItems(vanillaItems);
     }
 }

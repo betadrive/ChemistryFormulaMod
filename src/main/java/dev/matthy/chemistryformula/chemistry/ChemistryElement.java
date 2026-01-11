@@ -1,6 +1,6 @@
 package dev.matthy.chemistryformula.chemistry;
 
-public enum ChemistryElement {
+public enum ChemistryElement { // In order of atomic number, an enum with every known element
     H,
     He,
     Li,
