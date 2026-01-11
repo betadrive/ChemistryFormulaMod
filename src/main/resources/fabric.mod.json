@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "id": "cfm",
+  "version": "${version}",
+  "name": "ChemistryFormulaMod",
+  "description": "",
+  "authors": [],
+  "contact": {},
+  "license": "Apache-2.0",
+  "icon": "assets/cfm/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "fabric-datagen": [
+      "dev.matthy.chemistryformula.client.ChemistryFormulaModDataGenerator"
+    ],
+    "client": [
+      "dev.matthy.chemistryformula.client.ChemistryFormulaModClient"
+    ],
+    "main": [
+      "dev.matthy.chemistryformula.ChemistryFormulaMod"
+    ]
+  },
+  "mixins": [
+    "cfm.mixins.json",
+    {
+      "config": "cfm.client.mixins.json",
+      "environment": "client"
+    }
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric-api": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}
