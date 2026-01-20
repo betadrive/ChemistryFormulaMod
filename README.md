@@ -6,3 +6,30 @@ Our goal is to only add formulas grounded in <b>real-world data</b>.
 
 <h2>Usage in modpacks</h2>
 Feel free to use this in any modpacks. You do not need to ask for permission. You can also reference any chemical formulas in this mod as you wish.
+
+<h2>To-do</h2>
+- [ ] Overworld
+  - [x] Rocks
+    - [ ] Minerals
+      - [x] Amethyst
+      - [x] Quartz
+      - [ ] Calcite
+    - [x] Ores
+      - [x] Regular
+      - [x] Deepslate
+    - [x] All copper items
+    - [x] All minerals
+  - [x] Woods
+  - [x] Dyes
+  - [ ] Mob drops
+    - [x] String
+    - [x] Gunpowder
+    - [x] Bone
+    - [x] Ink Sac
+    - [x] Slimeball
+    - [ ] Rotten Flesh
+    - [ ] Spider Eye
+  - [ ]  Produce
+    - [x] Honey
+    - [ ] Flowers
+    - [ ] Crops

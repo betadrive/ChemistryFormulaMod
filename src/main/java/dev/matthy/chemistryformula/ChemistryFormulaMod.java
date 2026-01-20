@@ -1,6 +1,10 @@
 package dev.matthy.chemistryformula;
 
-import dev.matthy.chemistryformula.chemistry.VanillaTooltips;
+import dev.matthy.chemistryformula.chemistry.CraftingProcessor;
+import dev.matthy.chemistryformula.chemistry.ItemTooltip;
+import dev.matthy.chemistryformula.integration.CFMConfig;
+import me.shedaniel.autoconfig.AutoConfig;
+import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
@@ -13,7 +17,8 @@ public class ChemistryFormulaMod implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        ServerLifecycleEvents.SERVER_STARTED.register(VanillaTooltips::deepInit);
-        ServerPlayerEvents.JOIN.register((spe) -> VanillaTooltips.init());
+        AutoConfig.register(CFMConfig.class, GsonConfigSerializer::new);
+        ServerLifecycleEvents.SERVER_STARTED.register(CraftingProcessor::deepInit);
+        ServerPlayerEvents.JOIN.register((spe) -> ItemTooltip.init());
     }
 }

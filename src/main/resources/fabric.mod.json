@@ -10,8 +10,8 @@
   "icon": "assets/cfm/icon.png",
   "environment": "*",
   "entrypoints": {
-    "fabric-datagen": [
-      "dev.matthy.chemistryformula.client.ChemistryFormulaModDataGenerator"
+    "modmenu": [
+      "dev.matthy.chemistryformula.integration.CFMModMenuIntegration"
     ],
     "client": [
       "dev.matthy.chemistryformula.client.ChemistryFormulaModClient"

@@ -1,0 +1,9 @@
+{
+  "title.cfm.config": "CFM config",
+  "text.autoconfig.cfm.category.display": "Display",
+  "text.autoconfig.cfm.category.calculation": "Calculation",
+  "text.autoconfig.cfm.option.displayFormula": "Display formulas",
+  "text.autoconfig.cfm.option.displayFormula.@Tooltip": "Display chemical formulas in item tooltips",
+  "text.autoconfig.cfm.option.maxDepth": "Max recipe processing depth",
+  "text.autoconfig.cfm.option.maxDepth.@Tooltip": "This is the absolute max depth that the recipe processor will go to before giving up. This should never happen, but is here to prevent infinite loops."
+}

@@ -9,9 +9,7 @@ public class Elements {
 
     public static EnumMap<ChemistryElement, Integer> ATOMIC_NUMBERS = new EnumMap<>(ChemistryElement.class) {{ // Maps ChemistryElement to integer atomic number from 1-118
         ListIterator<ChemistryElement> iterator = Arrays.stream(ELEMENTS).toList().listIterator();
-        while (iterator.hasNext()) {
-            put(iterator.next(), iterator.nextIndex());
-        }
+        while (iterator.hasNext()) put(iterator.next(), iterator.nextIndex());
     }};
     public static HashMap<Integer, String> subscripts = new HashMap<>() {{ // Maps integer (0-9) to subscript Unicode character
         put(1, "₁");
