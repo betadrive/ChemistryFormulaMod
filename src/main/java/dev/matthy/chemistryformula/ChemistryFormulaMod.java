@@ -1,7 +1,7 @@
 package dev.matthy.chemistryformula;
 
-import dev.matthy.chemistryformula.chemistry.CraftingProcessor;
-import dev.matthy.chemistryformula.chemistry.ItemTooltip;
+import dev.matthy.chemistryformula.calculate.CraftingProcessor;
+import dev.matthy.chemistryformula.display.ItemTooltip;
 import dev.matthy.chemistryformula.integration.CFMConfig;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;

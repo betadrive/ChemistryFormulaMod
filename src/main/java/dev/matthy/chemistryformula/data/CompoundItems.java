@@ -1,6 +1,6 @@
 package dev.matthy.chemistryformula.data;
 
-import dev.matthy.chemistryformula.chemistry.ChemistryCompound;
+import dev.matthy.chemistryformula.api.ChemistryCompound;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.util.Identifier;
@@ -8,9 +8,9 @@ import net.minecraft.util.Identifier;
 import java.util.HashMap;
 import java.util.Map;
 
-import static dev.matthy.chemistryformula.chemistry.ChemistryCompound.El;
-import static dev.matthy.chemistryformula.chemistry.ChemistryElement.*;
-import static dev.matthy.chemistryformula.chemistry.CraftingProcessor.getId;
+import static dev.matthy.chemistryformula.api.ChemistryCompound.El;
+import static dev.matthy.chemistryformula.api.ChemistryElement.*;
+import static dev.matthy.chemistryformula.calculate.CraftingProcessor.getId;
 import static dev.matthy.chemistryformula.data.Chemicals.*;
 import static dev.matthy.chemistryformula.data.Ions.*;
 

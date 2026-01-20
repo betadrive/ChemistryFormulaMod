@@ -1,10 +1,10 @@
 package dev.matthy.chemistryformula.data;
 
-import dev.matthy.chemistryformula.chemistry.ChemistryCompound;
+import dev.matthy.chemistryformula.api.ChemistryCompound;
 
-import static dev.matthy.chemistryformula.chemistry.ChemistryCompound.El;
-import static dev.matthy.chemistryformula.chemistry.ChemistryCompound.fromFormula;
-import static dev.matthy.chemistryformula.chemistry.ChemistryElement.*;
+import static dev.matthy.chemistryformula.api.ChemistryCompound.El;
+import static dev.matthy.chemistryformula.api.ChemistryCompound.fromFormula;
+import static dev.matthy.chemistryformula.api.ChemistryElement.*;
 import static dev.matthy.chemistryformula.data.Ions.*;
 
 public class Chemicals {

@@ -1,6 +1,8 @@
-package dev.matthy.chemistryformula.chemistry;
+package dev.matthy.chemistryformula.calculate;
 
 import dev.matthy.chemistryformula.ChemistryFormulaMod;
+import dev.matthy.chemistryformula.api.ChemistryCompound;
+import dev.matthy.chemistryformula.api.ChemistryElement;
 import dev.matthy.chemistryformula.integration.CFMConfig;
 import me.shedaniel.autoconfig.AutoConfig;
 import net.minecraft.item.Item;
@@ -17,7 +19,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-import static dev.matthy.chemistryformula.chemistry.ChemistryCompound.El;
+import static dev.matthy.chemistryformula.api.ChemistryCompound.El;
 import static dev.matthy.chemistryformula.data.CompoundItems.vanillaItems;
 
 public class CraftingProcessor {

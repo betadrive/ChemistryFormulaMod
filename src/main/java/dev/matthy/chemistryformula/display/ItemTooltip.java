@@ -1,5 +1,6 @@
-package dev.matthy.chemistryformula.chemistry;
+package dev.matthy.chemistryformula.display;
 
+import dev.matthy.chemistryformula.api.ChemistryCompound;
 import dev.matthy.chemistryformula.integration.CFMConfig;
 import me.shedaniel.autoconfig.AutoConfig;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
@@ -8,7 +9,7 @@ import net.minecraft.util.Identifier;
 
 import java.util.HashMap;
 
-import static dev.matthy.chemistryformula.chemistry.CraftingProcessor.getId;
+import static dev.matthy.chemistryformula.calculate.CraftingProcessor.getId;
 import static dev.matthy.chemistryformula.data.CompoundItems.vanillaItems;
 
 public class ItemTooltip {

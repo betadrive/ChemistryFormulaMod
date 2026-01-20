@@ -1,4 +1,4 @@
-package dev.matthy.chemistryformula.chemistry;
+package dev.matthy.chemistryformula.api;
 
 public enum ChemistryElement { // In order of atomic number, an enum with every known element
     H,

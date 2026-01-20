@@ -1,4 +1,6 @@
-package dev.matthy.chemistryformula.chemistry;
+package dev.matthy.chemistryformula.display;
+
+import dev.matthy.chemistryformula.api.ChemistryElement;
 
 import java.util.*;
 import java.util.stream.Collectors;

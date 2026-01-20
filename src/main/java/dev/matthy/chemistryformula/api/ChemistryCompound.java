@@ -1,9 +1,11 @@
-package dev.matthy.chemistryformula.chemistry;
+package dev.matthy.chemistryformula.api;
+
+import dev.matthy.chemistryformula.display.Elements;
 
 import java.util.EnumMap;
 import java.util.Map;
 
-import static dev.matthy.chemistryformula.chemistry.ChemistryElement.*;
+import static dev.matthy.chemistryformula.api.ChemistryElement.*;
 
 public class ChemistryCompound {
     // Maps element to number of atoms of that element in the compound
