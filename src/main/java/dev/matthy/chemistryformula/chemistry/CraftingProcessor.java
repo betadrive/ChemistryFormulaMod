@@ -25,7 +25,6 @@ public class CraftingProcessor {
         Set<Object> seen = ConcurrentHashMap.newKeySet();
         return t -> seen.add(keyExtractor.apply(t));
     }
-    public static final int ultimateMaxDepth = AutoConfig.getConfigHolder(CFMConfig.class).getConfig().maxDepth; // Max depth before we give up on processing deeper into recipes. Used to prevent infinite loops
     public static Identifier getId(Item item) {
         return Registries.ITEM.getId(item);
     }
@@ -63,7 +62,7 @@ public class CraftingProcessor {
     }
     public static void deepInit(MinecraftServer server) {
         int recipesComputed = 0;
-        for(int i=0; i<ultimateMaxDepth; i++) { // We run processTree multiple times in order to get recipes nested more than 2 layers deep. For example, without this loop, wood planks would work (oak logs are already categorized), but sticks would not (oak logs are categorized but oak planks are not yet)
+        for(int i=0; i<AutoConfig.getConfigHolder(CFMConfig.class).getConfig().maxDepth; i++) { // We run processTree multiple times in order to get recipes nested more than 2 layers deep. For example, without this loop, wood planks would work (oak logs are already categorized), but sticks would not (oak logs are categorized but oak planks are not yet)
             processTree(server);
             ChemistryFormulaMod.LOGGER.info("depth=%d, %d items' compositions computed".formatted(i, vanillaItems.size())); // Log how many recipes have been calculated
             if(vanillaItems.size() > recipesComputed) recipesComputed = vanillaItems.size(); // If we've calculated more recipes total than last time, keep going
