@@ -20,20 +20,18 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 
 import static dev.matthy.chemistryformula.api.ChemistryCompound.El;
+import static dev.matthy.chemistryformula.calculate.ProcessedRecipe.distinctByKey;
 import static dev.matthy.chemistryformula.data.CompoundItems.vanillaItems;
 
 public class CraftingProcessor {
-    public static <T> Predicate<T> distinctByKey(Function<? super T, ?> keyExtractor) { // cr.: https://stackoverflow.com/q/23699371
-        Set<Object> seen = ConcurrentHashMap.newKeySet();
-        return t -> seen.add(keyExtractor.apply(t));
-    }
-    public static Identifier getId(Item item) {
+    public static Identifier getId(Item item) { // Get the item ID from Item class. Used for the keys in CompoundItems et al.
         return Registries.ITEM.getId(item);
     }
+    public static ArrayList<Item> acceptableItems = new ArrayList<>();
     public static void processTree(MinecraftServer server) {
         // Shaped recipes
         Set<Identifier> ids = vanillaItems.keySet();
-        ArrayList<Item> acceptableItems = new ArrayList<>();
+
         for(Identifier id : ids) {
             acceptableItems.add(Registries.ITEM.get(id));
         }
@@ -41,24 +39,15 @@ public class CraftingProcessor {
                 .filter((RecipeEntry<?> entry) -> entry.value() instanceof ShapedRecipe || entry.value() instanceof ShapelessRecipe) // Get only shaped recipes
                 .map(recipe -> (CraftingRecipe) recipe.value())
                 .forEach((CraftingRecipe recipe) -> {
-                    int validSlots = 0; // Slots that aren't empty
-                    ArrayList<ChemistryCompound> satisfactoryIngredients = new ArrayList<>(); // All ChemistryCompounds that could be calculated from their Ingredients
-                    for (Ingredient ingredient : recipe.getIngredientPlacement().getIngredients()) { // Brute-force to see if any keys in our vanillaItems match a requirement
-                        if(ingredient.isEmpty()) continue;
-                        validSlots++;
-                        for (Item item : acceptableItems) {
-                            if (!ingredient.test(item.getDefaultStack())) continue;
-                            satisfactoryIngredients.add(vanillaItems.get(getId(item)));
-                            break;
-                        }
-                    }
-                    if(satisfactoryIngredients.size() != validSlots) return; // If there were any items *without* formulas, then give up
-                    ItemStack stack = recipe.craft(CraftingRecipeInput.EMPTY, server.getRegistryManager()); // Get the output item ItemStack
-                    Identifier id = getId(stack.getItem()); // Get the output item ID
+                    ProcessedRecipe processedRecipe;
+                    if(recipe instanceof ShapedRecipe) processedRecipe = new ProcessedRecipe((ShapedRecipe) recipe, server);
+                    else if(recipe instanceof ShapelessRecipe) processedRecipe = new ProcessedRecipe((ShapelessRecipe) recipe, server);
+                    else throw new IllegalArgumentException("Recipe should be ShapedRecipe or ShapelessRecipe");
+                    Identifier id = getId(processedRecipe.output); // Get the output item ID
                     if(vanillaItems.containsKey(id)) return; // If already calculated, exit this item iteration early
                     ChemistryCompound compound = ChemistryCompound.fromFormula(El(ChemistryElement.H, 0)); // Make empty ChemistryCompound
-                    for(ChemistryCompound toAdd : satisfactoryIngredients.stream().filter(distinctByKey(ChemistryCompound::toString)).toList()) compound.add(toAdd); // Combine all the unique ChemistryCompounds into 1 mixture
-                    if(compound.isEmpty()) return; // If the compound is empty, exit early
+                    for(ChemistryCompound toAdd : processedRecipe.satisfactoryIngredients.stream().filter(distinctByKey(ChemistryCompound::toString)).toList()) compound.add(toAdd); // Combine all the unique ChemistryCompounds into 1 mixture
+                    if(compound.isEmpty() || !processedRecipe.recipeFullyCalculable) return; // If the compound is empty, exit early
                     vanillaItems.put(id, compound); // Add to our database otherwise
                 });
     }
