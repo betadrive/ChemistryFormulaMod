@@ -6,18 +6,13 @@ import dev.matthy.chemistryformula.api.ChemistryElement;
 import dev.matthy.chemistryformula.integration.CFMConfig;
 import me.shedaniel.autoconfig.AutoConfig;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.*;
-import net.minecraft.recipe.input.CraftingRecipeInput;
 import net.minecraft.registry.Registries;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.Identifier;
 
 import java.util.ArrayList;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.Function;
-import java.util.function.Predicate;
 
 import static dev.matthy.chemistryformula.api.ChemistryCompound.El;
 import static dev.matthy.chemistryformula.calculate.ProcessedRecipe.distinctByKey;
