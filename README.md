@@ -8,15 +8,17 @@ Our goal is to only add formulas grounded in <b>real-world data</b>.
 Feel free to use this in any modpacks. You do not need to ask for permission. You can also reference any chemical formulas in this mod as you wish.
 
 <h2>To-do</h2>
+
 - [ ] Overworld
   - [x] Rocks
-    - [ ] Minerals
+    - [x] Minerals
       - [x] Amethyst
       - [x] Quartz
-      - [ ] Calcite
+      - [x] Calcite
     - [x] Ores
       - [x] Regular
       - [x] Deepslate
+      - [x] Raw
     - [x] All copper items
     - [x] All minerals
   - [x] Woods

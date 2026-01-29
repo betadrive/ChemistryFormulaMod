@@ -4,7 +4,6 @@ import dev.matthy.chemistryformula.api.ChemistryCompound;
 import net.minecraft.item.Item;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.ShapedRecipe;
-import net.minecraft.recipe.ShapelessRecipe;
 import net.minecraft.recipe.input.CraftingRecipeInput;
 import net.minecraft.server.MinecraftServer;
 
@@ -14,8 +13,9 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-import static dev.matthy.chemistryformula.calculate.CraftingProcessor.*;
-import static dev.matthy.chemistryformula.data.CompoundItems.vanillaItems;
+import static dev.matthy.chemistryformula.calculate.CraftingProcessor.acceptableItems;
+import static dev.matthy.chemistryformula.calculate.CraftingProcessor.getId;
+import static dev.matthy.chemistryformula.data.CompoundItems.calculatedItems;
 
 public class ProcessedRecipe {
     public Item output;
@@ -32,25 +32,19 @@ public class ProcessedRecipe {
             validSlots++;
             for (Item item : acceptableItems) {
                 if (!ingredient.test(item.getDefaultStack())) continue;
-                satisfactoryIngredients.add(vanillaItems.get(getId(item)));
+                satisfactoryIngredients.add(calculatedItems.get(getId(item)));
                 break;
             }
         }
         recipeFullyCalculable = satisfactoryIngredients.size() == validSlots;
         output = recipe.craft(CraftingRecipeInput.EMPTY, server.getRegistryManager()).getItem(); // Get the output item as Item
     }
-    public ProcessedRecipe(ShapelessRecipe recipe, MinecraftServer server) {
-        int validSlots = 0; // Slots that aren't empty
-        for (Ingredient ingredient : recipe.getIngredientPlacement().getIngredients()) { // Brute-force to see if any keys in our vanillaItems match a requirement
-            if(ingredient.isEmpty()) continue;
-            validSlots++;
-            for (Item item : acceptableItems) {
-                if (!ingredient.test(item.getDefaultStack())) continue;
-                satisfactoryIngredients.add(vanillaItems.get(getId(item)));
-                break;
-            }
-        }
-        recipeFullyCalculable = satisfactoryIngredients.size() == validSlots;
-        output = recipe.craft(CraftingRecipeInput.EMPTY, server.getRegistryManager()).getItem(); // Get the output item as Item
+    public ProcessedRecipe(ArrayList<ChemistryCompound> ingredients, Item output, boolean fullyCalculable) {
+        this.satisfactoryIngredients = ingredients;
+        this.output = output;
+        this.recipeFullyCalculable = fullyCalculable;
+    }
+    public ProcessedRecipe(ArrayList<ChemistryCompound> ingredients, Item output) {
+        this(ingredients, output, true);
     }
 }

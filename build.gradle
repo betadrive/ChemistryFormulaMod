@@ -107,8 +107,8 @@ publishing {
                 name = "GitHubPackages"
                 url = "https://maven.pkg.github.com/betadrive/ChemistryFormulaMod"
                 credentials {
-                    username = System.getenv("GITHUB_ACTOR")
-                    password = System.getenv("GITHUB_TOKEN")
+                    username = System.getenv("MAVEN_USERNAME")
+                    password = System.getenv("MAVEN_PASSWORD")
                 }
             }
         }

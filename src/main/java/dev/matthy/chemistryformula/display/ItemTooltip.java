@@ -10,7 +10,7 @@ import net.minecraft.util.Identifier;
 import java.util.HashMap;
 
 import static dev.matthy.chemistryformula.calculate.CraftingProcessor.getId;
-import static dev.matthy.chemistryformula.data.CompoundItems.vanillaItems;
+import static dev.matthy.chemistryformula.data.CompoundItems.calculatedItems;
 
 public class ItemTooltip {
     public static void initItems(HashMap<Identifier, ChemistryCompound> items) {
@@ -21,6 +21,6 @@ public class ItemTooltip {
     }
     public static void init() {
         // Currently supported recipe type ids: minecraft:crafting_shaped, minecraft:crafting_shapeless
-        initItems(vanillaItems);
+        initItems(calculatedItems);
     }
 }

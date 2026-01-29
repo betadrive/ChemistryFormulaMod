@@ -9,13 +9,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static dev.matthy.chemistryformula.api.ChemistryCompound.El;
+import static dev.matthy.chemistryformula.api.ChemistryCompound.fromFormula;
 import static dev.matthy.chemistryformula.api.ChemistryElement.*;
 import static dev.matthy.chemistryformula.calculate.CraftingProcessor.getId;
 import static dev.matthy.chemistryformula.data.Chemicals.*;
 import static dev.matthy.chemistryformula.data.Ions.*;
 
 public class CompoundItems {
-    public static HashMap<Identifier, ChemistryCompound> vanillaItems = new HashMap<>() {{ // The Monolith. Converts many item Identifiers to rough chemical formulas
+    public static HashMap<Identifier, ChemistryCompound> calculatedItems = new HashMap<>() {{ // The Monolith. Converts many item Identifiers to rough chemical formulas
         // Mining/digging
         put(getId(Items.COAL), ChemistryCompound.fromFormula(El(C))); // C
         put(getId(Items.CHARCOAL), ChemistryCompound.fromFormula(El(C))); // C
@@ -25,6 +26,7 @@ public class CompoundItems {
         put(getId(Items.COPPER_INGOT), ChemistryCompound.fromFormula(El(Cu))); // Cu
         put(getId(Items.EMERALD), EMERALD);
         put(getId(Items.AMETHYST_SHARD), SILICON_DIOXIDE); // cr.: https://en.wikipedia.org/wiki/Emerald
+        put(getId(Items.CALCITE), CARBONATE.mix(Ca)); // cr.: https://en.wikipedia.org/wiki/Calcite
         put(getId(Items.LAPIS_LAZULI), LAZURITE);
         put(getId(Items.REDSTONE), SULFATE.mix(El(Co))); // cr.: https://www.reddit.com/r/feedthebeast/comments/bcbies/debunking_mmc_week_2_redstones_real_life/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
         put(getId(Items.QUARTZ), SULFATE.mix(El(Co))); // cr.: https://en.wikipedia.org/wiki/Quartz
@@ -38,7 +40,9 @@ public class CompoundItems {
         put(getId(Items.DEEPSLATE), DEEPSLATE);
         put(getId(Items.COBBLED_DEEPSLATE), DEEPSLATE);
         put(getId(Items.FLINT), SILICON_DIOXIDE); // cr.: https://digitalfire.com/material/flint
+
         // Ores
+        // In stone
         put(getId(Items.COAL_ORE), STONE.mix(El(C)));
         put(getId(Items.COPPER_ORE), STONE.mix(El(Cu)));
         put(getId(Items.IRON_ORE), STONE.mix(El(Fe)));
@@ -47,6 +51,7 @@ public class CompoundItems {
         put(getId(Items.GOLD_ORE), STONE.mix(El(Au)));
         put(getId(Items.DIAMOND_ORE), STONE.mix(El(C)));
         put(getId(Items.EMERALD_ORE), STONE.mix(EMERALD));
+        // In deepslate
         put(getId(Items.DEEPSLATE_COAL_ORE), DEEPSLATE.mix(El(C)));
         put(getId(Items.DEEPSLATE_COPPER_ORE), DEEPSLATE.mix(El(Cu)));
         put(getId(Items.DEEPSLATE_IRON_ORE), DEEPSLATE.mix(El(Fe)));
@@ -55,6 +60,10 @@ public class CompoundItems {
         put(getId(Items.DEEPSLATE_GOLD_ORE), DEEPSLATE.mix(El(Au)));
         put(getId(Items.DEEPSLATE_DIAMOND_ORE), DEEPSLATE.mix(El(C)));
         put(getId(Items.DEEPSLATE_EMERALD_ORE), DEEPSLATE.mix(EMERALD));
+        // Raw
+        put(getId(Items.RAW_COPPER), fromFormula(El(Cu)));
+        put(getId(Items.RAW_GOLD), fromFormula(El(Au)));
+        put(getId(Items.RAW_IRON), fromFormula(El(Fe)));
 
         // Smelting
         put(getId(Items.GLASS), SILICON_DIOXIDE); // cr.: https://en.wikipedia.org/wiki/Glass#Microscopic_structure
@@ -161,9 +170,9 @@ public class CompoundItems {
         put(getId(Items.COBWEB), GLYCINE); // cr.: https://bioinfo.uochb.cas.cz/teaching/protphys2019/Saravanan.pdf, https://en.wikipedia.org/wiki/Glycine
     }};
     public static void addCompounds(Item item, ChemistryCompound compound) {
-        vanillaItems.put(getId(item), compound);
+        calculatedItems.put(getId(item), compound);
     }
     public static void addCompounds(Map<Identifier, ChemistryCompound> map) {
-        vanillaItems.putAll(map);
+        calculatedItems.putAll(map);
     }
 }
