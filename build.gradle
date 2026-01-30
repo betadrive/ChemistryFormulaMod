@@ -1,6 +1,6 @@
 plugins {
     id 'fabric-loom' version '1.11-SNAPSHOT'
-    id 'maven-publish'
+    id "maven-publish"
 }
 
 version = project.mod_version
@@ -88,29 +88,5 @@ java {
 jar {
     from("LICENSE") {
         rename { "${it}_${project.archivesBaseName}" }
-    }
-}
-
-// configure the maven publication
-publishing {
-    publications {
-        create("mavenJava", MavenPublication) {
-            artifactId = project.archives_base_name
-            from components.java
-        }
-    }
-
-    // See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
-    repositories {
-        repositories {
-            maven {
-                name = "GitHubPackages"
-                url = "https://maven.pkg.github.com/betadrive/ChemistryFormulaMod"
-                credentials {
-                    username = System.getenv("MAVEN_USERNAME")
-                    password = System.getenv("MAVEN_PASSWORD")
-                }
-            }
-        }
     }
 }
